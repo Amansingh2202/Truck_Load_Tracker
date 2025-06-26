@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getTrucks, updateTruckStatus } from '../services/api';
 import AddTruck from './Add_Truck';
 
+
 const Dashboard = ({ token, setToken }) => {
   const [trucks, setTrucks] = useState([]);
   const [filter, setFilter] = useState('All');
@@ -18,7 +19,8 @@ const Dashboard = ({ token, setToken }) => {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       setIsAdmin(decodedToken.role === 'Admin');
     };
-
+   
+  
     fetchTrucks();
     fetchUserRole();
   }, [token]);
@@ -40,7 +42,7 @@ const Dashboard = ({ token, setToken }) => {
     filter === 'All' ? trucks : trucks.filter((truck) => truck.status === filter);
 
   return (
-    <div className="p-6 relative">
+    <div className="h-screen w-screen  p-6 overflow-auto  bg-blue-100">
       {/* ✅ AddTruck Modal */}
       {showAddTruck && (
         <AddTruck token={token} onClose={() => setShowAddTruck(false)} />
@@ -61,7 +63,7 @@ const Dashboard = ({ token, setToken }) => {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="border p-2 rounded"
+          className="border p-2 rounded bg-blue-500 text-amber-50"
         >
           <option value="All">All</option>
           <option value="In Transit">In Transit</option>
@@ -80,8 +82,8 @@ const Dashboard = ({ token, setToken }) => {
       </div>
 
       {/* ✅ Table */}
-      <table className="table-auto w-full border-collapse border border-gray-300 text-sm">
-        <thead className="bg-gray-100">
+      <table className=" bg-gray-700  table-auto w-full border-collapse border border-gray-300 text-sm">
+        <thead className="text-white">
           <tr>
             <th className="border p-2 w-32">Truck ID</th>
             <th className="border p-2 w-48">Driver Name</th>
@@ -91,17 +93,11 @@ const Dashboard = ({ token, setToken }) => {
         </thead>
         <tbody>
           {filteredTrucks.map((truck) => (
-            <tr key={truck._id} className="align-top">
+            <tr key={truck._id} className="align-top text-amber-50">
               <td className="border p-2">{truck.truckId}</td>
               <td className="border p-2">{truck.driverName}</td>
               <td
-                className={`border p-2 w-32 font-semibold ${
-                  truck.status === 'Delivered'
-                    ? 'text-green-600'
-                    : truck.status === 'In Transit'
-                    ? 'text-yellow-600'
-                    : 'text-red-600'
-                }`}
+                className= "border p-2" 
               >
                 {truck.status}
               </td>

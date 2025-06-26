@@ -23,7 +23,7 @@ const App = () => {
   }, [token]);
 
   return (
-    <div className="p-4">
+    <div  className='mx-auto'>
       {!token ? (
         <>
           {!showLogin ? (
@@ -31,18 +31,13 @@ const App = () => {
           ) : (
             <Register setShowLogin={setShowLogin}/>
           )}
-          <div className="mt-4 text-center">
-            <button
-              onClick={() => setShowLogin(!showLogin)}
-              className="text-blue-600 underline"
-            >
-              {showLogin ? 'Go to Register' : 'Go to Login'}
-            </button>
-          </div>
+         
+        
         </>
       ) : (
         <Dashboard token={token} setToken={setToken} />
       )}
+     
     </div>
   );
 };

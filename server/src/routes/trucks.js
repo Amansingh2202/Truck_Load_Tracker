@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// Get all trucks (accessible by Admin, Dispatcher, Viewer)
+// Get all trucks 
 router.get('/', authMiddleware(['Admin', 'Dispatcher', 'Viewer']), async (req, res) => {
   try {
     const trucks = await Truck.find();
@@ -14,7 +14,7 @@ router.get('/', authMiddleware(['Admin', 'Dispatcher', 'Viewer']), async (req, r
   }
 });
 
-// Update truck status (accessible by Admin only)
+// Update truck status 
 router.put('/:id/status', authMiddleware(['Admin']), async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -29,7 +29,7 @@ router.put('/:id/status', authMiddleware(['Admin']), async (req, res) => {
   }
 });
 
-// Add a new truck (accessible by Admin only)
+// Add a new truck 
 router.post('/add', authMiddleware(['Admin']), async (req, res) => {
   const { truckId, driverName, status } = req.body;
 
